@@ -1,0 +1,85 @@
+import 'package:amber_erp/Pages/mail_page.dart';
+import 'package:amber_erp/Pages/phonecall_list.dart';
+import 'package:amber_erp/Pages/search_page.dart';
+import 'package:amber_erp/Pages/settings_page.dart';
+import 'package:amber_erp/Pages/support.dart';
+import 'package:amber_erp/components/app_bar_footer.dart';
+import 'package:amber_erp/components/banner_image.dart';
+import 'package:amber_erp/components/grid_view.dart';
+import 'package:flutter/material.dart';
+import 'package:amber_erp/components/app_bar.dart';
+import 'package:get/get.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int index = 0;
+  final gridItems = [
+    GridData('https://assets5.lottiefiles.com/packages/lf20_wpr8vxxt.json',
+        "Dashbord"),
+    GridData("https://assets3.lottiefiles.com/private_files/lf30_rkzommaq.json",
+        "SalesReport"),
+    GridData("https://assets6.lottiefiles.com/packages/lf20_bnecesf3.json",
+        "CashSummary"),
+    GridData("https://assets8.lottiefiles.com/packages/lf20_zprfc7im.json",
+        "ProfitReport"),
+    GridData("https://assets5.lottiefiles.com/packages/lf20_svfmrsni.json",
+        "PurchaseReport"),
+    GridData("https://assets3.lottiefiles.com/packages/lf20_nn7raoys.json",
+        "QuotationReport"),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: MyAppbar(),
+      ),
+      body: Column(
+        children: [
+          const MyBannerImage(),
+          Expanded(
+              child: MyGridview(
+            listData: gridItems,
+          ))
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.red,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Get.to(() => PhoneCallList());
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar:
+          MyAppbarFooter(index: index, onChangedTab: onChangedTab),
+    );
+  }
+
+  void onChangedTab(int index) {
+    setState(() {
+      this.index = index;
+      if (index == 2) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const SupportPage()));
+      }
+      if (index == 0) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const SearchPage()));
+      }
+      if (index == 1) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const MailPage()));
+      }
+      if (index == 3) {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const SettingsPage()));
+      }
+    });
+  }
+}
