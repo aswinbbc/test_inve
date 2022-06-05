@@ -52,14 +52,10 @@ class _StatsGridState extends State<StatsGrid> {
               child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              _buildStartCard(
-                'TotalSales',
-                salesAmount,
-              ),
-              _buildStartCard(
-                'TotalReturn',
-                salereturn,
-              )
+              _buildStartCard('TotalSales', salesAmount,
+                  isIconEnabled: true, icon: Icons.shopping_cart),
+              _buildStartCard('TotalReturn', salereturn,
+                  isIconEnabled: true, icon: Icons.numbers)
             ],
           )),
           Row(
@@ -83,10 +79,8 @@ class _StatsGridState extends State<StatsGrid> {
     );
   }
 
-  Expanded _buildStartCard(
-    String title,
-    double count,
-  ) {
+  Expanded _buildStartCard(String title, double count,
+      {bool isIconEnabled = false, IconData icon = Icons.circle}) {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -95,33 +89,40 @@ class _StatsGridState extends State<StatsGrid> {
         ),
         elevation: 10,
         child: Container(
-          margin: const EdgeInsets.all(8.0),
-          padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.only(
+              bottom: isIconEnabled ? 10.0 : 5.0, left: 8, top: 5),
           decoration: BoxDecoration(
             color: const Color(0x00ffffff),
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    count.toString(),
-                    style: Theme.of(context).textTheme.titleLarge!,
+                children: [
+                  if (isIconEnabled)
+                    Icon(
+                      icon,
+                      size: 50,
+                      color: Colors.blue,
+                    ),
+                  Expanded(
+                    child: Text(
+                      count.toString(),
+                      style: Theme.of(context).textTheme.titleLarge!,
+                      textAlign:
+                          isIconEnabled ? TextAlign.center : TextAlign.left,
+                    ),
                   ),
                 ],
               ),
-              Icon(
-                Icons.person,
-                size: 50,
-              )
             ],
           ),
         ),
