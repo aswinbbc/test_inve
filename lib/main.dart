@@ -3,8 +3,7 @@ import 'package:amber_erp/Pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-const SAVE_KEY_NAME ='UserLogedIn';
+const SAVE_KEY_NAME = 'UserLogedIn';
 void main() {
   runApp(const MyApp());
 }
@@ -17,56 +16,47 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.white
-      ),
+          scaffoldBackgroundColor: Colors.white, primaryColor: Colors.blue),
 
       routes: {
-        "signup":(context)=>const Sign_up(),
+        "signup": (context) => const Sign_up(),
       },
 
       debugShowCheckedModeBanner: false,
 
       //home: Sign_up(),
       // home: Login_page(),
-    // home: HomePage(),
-     // home: MySidebarLayout(),
-     //home: MyDashBord(),
+      // home: HomePage(),
+      // home: MySidebarLayout(),
+      //home: MyDashBord(),
       //home: CategoryViewChart(),
-     // home: MyListViewDashbord(),
+      // home: MyListViewDashbord(),
       //home: Home_Screen(),
       //home: MonthlyDashBord(),
       //home: SalesReport(),
       //home: PurchaseReport(),
       //home: CashSummary(),
-     // home: ProfitReport(),
+      // home: ProfitReport(),
       //home: QuotationReport(),
-     home: const SplashScreen(),
-     // home: TutorialVideo(),
+      home: const SplashScreen(),
+      // home: TutorialVideo(),
       //home: VideoHome(),
       //home: WatsNewPage(),
       //home: SupportPage(),
-     // home: SearchPage(),
-     // home: ProductSearch(),
-     // home: NotificationPage(),
+      // home: SearchPage(),
+      // home: ProductSearch(),
+      // home: NotificationPage(),
       //home: MailPage(),
-     // home: SettingsPage(),
-     // home: PasswordChange(),
+      // home: SettingsPage(),
+      // home: PasswordChange(),
       //home: ClientList(),
       //home: SummaryReport(),
-     // home: SupplierSummary(),
+      // home: SupplierSummary(),
       //home: CustomerSummary(),
-     // home: CommonReports(),
+      // home: CommonReports(),
       //home: PosReconcilation(),
-     // home: Vouchers(),
-     // home: ListviewControll(),
-
-
-
+      // home: Vouchers(),
+      // home: ListviewControll(),
     );
   }
-
 }
-
-
-
