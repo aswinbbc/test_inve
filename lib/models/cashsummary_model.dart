@@ -1,15 +1,15 @@
 import 'package:amber_erp/models/authentication.dart';
 
-class summaryreport{
+class summaryreport {
   final DateTime date;
-  final int salesAmount;
-  final int salesReturn;
-  final int purchaseAmount;
-  final int purchaseReturn;
-  final int receivables;
-  final int payables;
-  final int otherIncome;
-  final int otherExpense;
+  final double salesAmount;
+  final double salesReturn;
+  final double purchaseAmount;
+  final double purchaseReturn;
+  final double receivables;
+  final double payables;
+  final double otherIncome;
+  final double otherExpense;
 
   const summaryreport({
     required this.date,
@@ -21,12 +21,11 @@ class summaryreport{
     required this.payables,
     required this.otherIncome,
     required this.otherExpense,
+  });
 }
 
-      );
-}
-
-Future<List>cashSummaryReport(DateTime today) async{
-  List<dynamic>list=(await SummaryMaster().cashsummary(today) as List).reversed.toList();
+Future<List> cashSummaryReport(DateTime today) async {
+  List<dynamic> list =
+      (await SummaryMaster().cashsummary(today) as List).reversed.toList();
   return list;
 }

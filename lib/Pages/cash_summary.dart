@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:amber_erp/components/appbar_normal.dart';
 import 'package:amber_erp/models/cashsummary_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_swipable/flutter_swipable.dart';
@@ -44,31 +45,34 @@ class _CashSummaryState extends State<CashSummary> {
   Future<List<summaryreport>> getReport() async {
     DateTime today = DateTime.now();
     List Value = await cashSummaryReport(today);
-    //print(Value);
-    List<summaryreport> widList = Value.map((element) => summaryreport(
+    // print(Value);
+    Value.forEach((element) {
+      print(element);
+    });
+    List<summaryreport> widList = Value.map((element) {
+      // print(DateTime.parse(element['summarydate']));
+      return summaryreport(
         date: DateTime.parse(element['summarydate']),
-        salesAmount: int.parse(element['salesamount']),
-        salesReturn: int.parse(element['salesreturn']),
-        purchaseAmount: int.parse(element['purchaseamount']),
-        purchaseReturn: int.parse(element['purchasereturn']),
-        receivables: int.parse(element['receivables']),
-        payables: int.parse(element['payables']),
-        otherIncome: int.parse(element['othericome']),
-        otherExpense: int.parse(element['otherexpense']))).toList();
-//print(widList);
+        salesAmount: double.parse(element['salesamount']),
+        salesReturn: double.parse(element['salesreturn']),
+        purchaseAmount: double.parse(element['purchaseamount']),
+        purchaseReturn: double.parse(element['purchasereturn']),
+        receivables: double.parse(element['receivables']),
+        payables: double.parse(element['payables']),
+        otherIncome: double.parse(element['othericome']),
+        otherExpense: double.parse(element['otherexpense']),
+      );
+    }).toList();
+    print(widList.first.date);
     // print(widList[0].salesAmount);
     return widList;
   }
 
+  CarouselController buttonCarouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(
-          mytitle: "CashSummary",
-        ),
-      ),
+      appBar: AppBar(elevation: 0, title: const Text('Day book')),
       body: Center(
         child: FutureBuilder(
             future: getReport(),
@@ -78,34 +82,51 @@ class _CashSummaryState extends State<CashSummary> {
               if (snapshot.hasData) {
                 final reportList = snapshot.data;
                 // print(reportList);
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: Stack(
-                    children: reportList!
-                        .map((summryreportData) => MyCard(
-                              Colors.primaries[
-                                  Random().nextInt(Colors.primaries.length)],
-                              date: summryreportData.date,
-                              salesAmount:
-                                  summryreportData.salesAmount.toString(),
-                              // data[Random().nextInt(6)]['color'],salesAmount: summryreportData.salesAmount.toString(),
-                              salesreturn:
-                                  summryreportData.salesReturn.toString(),
-                              purchase:
-                                  summryreportData.purchaseAmount.toString(),
-                              purchasereturn:
-                                  summryreportData.purchaseReturn.toString(),
-                              receivables:
-                                  summryreportData.receivables.toString(),
-                              payables: summryreportData.payables.toString(),
-                              otherincome:
-                                  summryreportData.otherIncome.toString(),
-                              otherexpense:
-                                  summryreportData.otherExpense.toString(),
-                            ))
-                        .toList(),
-                  ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: CarouselSlider(
+                        carouselController: buttonCarouselController,
+                        options: CarouselOptions(
+                          height: double.infinity,
+                          autoPlay: false,
+                          enlargeCenterPage: true,
+                          initialPage: reportList!.length - 1,
+                        ),
+                        items: reportList
+                            .map((summryreportData) => MyCard(
+                                  Colors.primaries[5],
+                                  date: summryreportData.date,
+                                  salesAmount:
+                                      summryreportData.salesAmount.toString(),
+                                  // data[Random().nextInt(6)]['color'],salesAmount: summryreportData.salesAmount.toString(),
+                                  salesreturn:
+                                      summryreportData.salesReturn.toString(),
+                                  purchase: summryreportData.purchaseAmount
+                                      .toString(),
+                                  purchasereturn: summryreportData
+                                      .purchaseReturn
+                                      .toString(),
+                                  receivables:
+                                      summryreportData.receivables.toString(),
+                                  payables:
+                                      summryreportData.payables.toString(),
+                                  otherincome:
+                                      summryreportData.otherIncome.toString(),
+                                  otherexpense:
+                                      summryreportData.otherExpense.toString(),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                    // ElevatedButton(
+                    //   onPressed: () => buttonCarouselController.nextPage(
+                    //       duration: Duration(milliseconds: 300),
+                    //       curve: Curves.linear),
+                    //   child: Text('→'),
+                    // )
+                  ],
                 );
               } else if (snapshot.hasError) {
                 return const Center(
@@ -152,6 +173,7 @@ class _MyCardState extends State<MyCard> {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String formatted = formatter.format(widget.date).toString();
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         color: widget.color,
@@ -159,34 +181,43 @@ class _MyCardState extends State<MyCard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 25),
-            child: Center(
-              child: Text(
-                "DayBook",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: Colors.white),
-              ),
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 25),
+          //   child: Center(
+          //     child: Text(
+          //       "DayBook",
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.bold,
+          //         fontSize: 22,
+          //         // color: Colors.white,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 180, top: 25),
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  decoration: const BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: Colors.amber, width: 1.0))),
-                  child: Text(
-                    formatted,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 10, top: 10),
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.white10, width: 1.0))),
+                        child: Text(
+                          formatted,
+                          style: const TextStyle(
+                            // color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )

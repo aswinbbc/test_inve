@@ -12,7 +12,6 @@ class Login_page extends StatefulWidget {
 }
 
 class _Login_pageState extends State<Login_page> {
-
   bool hidePassword = true;
   bool _isChecked = false;
   final TextEditingController _userController = TextEditingController();
@@ -20,12 +19,10 @@ class _Login_pageState extends State<Login_page> {
 
   @override
   Widget build(BuildContext context) {
-
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-
       backgroundColor: Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -53,12 +50,14 @@ class _Login_pageState extends State<Login_page> {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
                       child: Container(
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(255, 255, 255, .1),
                               borderRadius: BorderRadius.circular(32)),
-                          child: TextFormField(cursorColor: Colors.yellow,style: const TextStyle(color: Colors.white),
+                          child: TextFormField(
+                            cursorColor: Colors.yellow,
+                            style: const TextStyle(color: Colors.white),
                             controller: _userController,
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(
@@ -77,21 +76,32 @@ class _Login_pageState extends State<Login_page> {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
                       child: Container(
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(255, 255, 255, .1),
                               borderRadius: BorderRadius.circular(32)),
-                          child: TextField(cursorColor: Colors.yellow,style: const TextStyle(color: Colors.white),
+                          child: TextField(
+                            cursorColor: Colors.yellow,
+                            style: const TextStyle(color: Colors.white),
                             controller: _passController,
                             decoration: InputDecoration(
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.white,
                                 ),
-                                suffixIcon: IconButton(onPressed: (){
-                                  hidePassword =!hidePassword;
-                                },color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),icon: Icon(hidePassword?Icons.visibility_off : Icons.visibility),),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    hidePassword = !hidePassword;
+                                  },
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.4),
+                                  icon: Icon(hidePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility),
+                                ),
                                 hintText: "Password",
                                 hintStyle: const TextStyle(color: Colors.white),
                                 border: InputBorder.none,
@@ -101,31 +111,17 @@ class _Login_pageState extends State<Login_page> {
                           )),
                     ),
                     const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                        height: 50,
-                        width: 380,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: FlatButton(
-                            onPressed:handleRememberme,
-                            child: const Text(
-                              "Sign In",
-                              style:
-                              TextStyle(color: Colors.blue, fontSize: 25),
-                            ))),
-                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
                         Checkbox(
+                            activeColor: Colors.white,
+                            checkColor: Colors.black,
                             value: _isChecked,
                             onChanged: (changedvalue) {
                               setState(() {
-                                _isChecked = true;
+                                _isChecked = changedvalue!;
                               });
                             }),
                         const Text(
@@ -137,6 +133,22 @@ class _Login_pageState extends State<Login_page> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                        height: 50,
+                        width: 380,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FlatButton(
+                            onPressed: handleRememberme,
+                            child: const Text(
+                              "Sign In",
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 25),
+                            ))),
                     TextButton(
                         onPressed: () {},
                         child: const Text(
@@ -165,7 +177,7 @@ class _Login_pageState extends State<Login_page> {
                             child: const Text(
                               "SIGN UP",
                               style:
-                              TextStyle(fontSize: 20, color: Colors.white),
+                                  TextStyle(fontSize: 20, color: Colors.white),
                             )),
                       ],
                     )
@@ -179,62 +191,58 @@ class _Login_pageState extends State<Login_page> {
     );
   }
 
-
   void handleRememberme() {
     if (_isChecked) {
       SharedPreferences.getInstance().then(
-            (pref) {
+        (pref) {
           pref.setString('Username', _userController.text);
           pref.setString('Password', _passController.text);
         },
       );
     }
 
-   var username ="";
+    var username = "";
     String txtuser = _userController.text;
     String txtPass = _passController.text;
-    UserLogin().login(txtuser, txtPass).then((value)async {
-      GetUser()async{
+    UserLogin().login(txtuser, txtPass).then((value) async {
+      GetUser() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         username = prefs.getString('user_name').toString();
-       // final clientId = prefs.getString('client_id').toString();
-
-
+        // final clientId = prefs.getString('client_id').toString();
       }
-      if(value =="User Successfully LoggedIn")
-      {
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MySidebarLayout()));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(behavior:SnackBarBehavior.floating,margin: const EdgeInsets.all(10),content: Text(value),));
+
+      if (value == "User Successfully LoggedIn") {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const MySidebarLayout()));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(10),
+          content: Text(value),
+        ));
         final _sharedPrefs = await SharedPreferences.getInstance();
         await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
-
-      }
-
-      else if(value=="Waiting for Authentication")
-      {
+      } else if (value == "Waiting for Authentication") {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.purple,
           behavior: SnackBarBehavior.floating,
           margin: EdgeInsets.all(10),
-          content: Text("Waiting for Authentication..."),));
-      }
-      else if(txtuser != username)
-      {
+          content: Text("Waiting for Authentication..."),
+        ));
+      } else if (txtuser != username) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
           margin: EdgeInsets.all(10),
-          content: Text("Incorrect Username or Password"),));
-      }
-      else {
+          content: Text("Incorrect Username or Password"),
+        ));
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.orange,
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.all(10),
-          content: Text(value),));
+          content: Text(value),
+        ));
       }
     });
   }
-
-
 }
