@@ -13,11 +13,11 @@ class _SalesReportState extends State<SalesReport> {
   Future<List<report>> getData() async {
     DateTime today = DateTime.now();
     List value = await getSalesReport(today);
-
+    print(value);
     List<report> widList = value
         .map((element) => report(
             clientName: element['CustomerName'],
-            salesAmount: int.parse(element['SaleAmount']),
+            salesAmount: double.parse(element['SaleAmount']),
             paymentMode: element['PaymentMode']))
         .toList();
 
@@ -34,7 +34,7 @@ class _SalesReportState extends State<SalesReport> {
             builder:
                 (BuildContext context, AsyncSnapshot<List<report>> snapshot) {
               if (snapshot.hasData) {
-                int total = 0;
+                double total = 0;
                 final reportList = snapshot.data;
                 return Column(
                   children: [

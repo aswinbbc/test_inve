@@ -18,7 +18,7 @@ class _PurchaseReportState extends State<PurchaseReport> {
     List<purchasereport> widList = value
         .map((element) => purchasereport(
             supplierName: element['SupplierName'],
-            purchaseAmount: int.parse(element['PurchaseAmount']),
+            purchaseAmount: double.parse(element['PurchaseAmount']),
             paymentMode: element['PaymentMode'],
             invoiceNo: element['InvoiceNo']))
         .toList();
@@ -36,7 +36,7 @@ class _PurchaseReportState extends State<PurchaseReport> {
               AsyncSnapshot<List<purchasereport>> snapshot) {
             if (snapshot.hasData) {
               final reportList = snapshot.data;
-              int total = 0;
+              double total = 0;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

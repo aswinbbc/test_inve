@@ -44,8 +44,7 @@ class _PosReconcilationState extends State<PosReconcilation> {
                   return Card(
                     elevation: 5,
                     color: Colors.white70,
-                    child: Flexible(
-                        child: Column(
+                    child: Column(
                       children: [
                         SizedBox(
                           height: 350,
@@ -55,7 +54,7 @@ class _PosReconcilationState extends State<PosReconcilation> {
                                 top: 20.0, bottom: 20.0, left: 20.0),
                             child: Column(
                               children: <Widget>[
-                                Flexible(
+                                Expanded(
                                   child: Column(
                                     children: [
                                       Row(
@@ -452,7 +451,7 @@ class _PosReconcilationState extends State<PosReconcilation> {
                           ),
                         )
                       ],
-                    )),
+                    ),
                   );
                 },
               );

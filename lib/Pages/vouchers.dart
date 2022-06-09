@@ -11,22 +11,22 @@ class Vouchers extends StatefulWidget {
 }
 
 class _VouchersState extends State<Vouchers> {
-  double pv = 0;
-  double rv = 0;
-  double sc = 0;
-  double pc = 0;
+  double pv = 0.0;
+  double rv = 0.0;
+  double sc = 0.0;
+  double pc = 0.0;
 
-  List<dynamic> Report = [];
   Future<List> getVoucherSummary() async {
+    List<dynamic> Report = [];
     DateTime today = DateTime.now();
     AccountsVoucherSummary().vouchersummary(today).then((value) {
       // List<dynamic>list = (value as List).reversed.toList();
       value;
       //print("eeeee$element");
       value.forEach((element) {
-        print(element);
+        // print(element);
         if (element['voucherType'] == 'PV') {
-          print(element['voucherAmount']);
+          // print(element['voucherAmount']);
           pv = double.parse(element['voucherAmount']);
         } else if (element['voucherType'] == 'PC') {
           pc = double.parse(element['voucherAmount']);
@@ -57,7 +57,7 @@ class _VouchersState extends State<Vouchers> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Column(
         children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
@@ -148,22 +148,20 @@ class _VouchersState extends State<Vouchers> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Flexible(
-                          child: Row(
-                            children: const [
-                              Text('Total Receipt'),
-                              SizedBox(
-                                width: 90,
-                              ),
-                              Text(
-                                'Receipt Voucher',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.blue,
-                                    fontStyle: FontStyle.italic),
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: const [
+                            Text('Total Receipt'),
+                            SizedBox(
+                              width: 90,
+                            ),
+                            Text(
+                              'Receipt Voucher',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blue,
+                                  fontStyle: FontStyle.italic),
+                            )
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -215,22 +213,20 @@ class _VouchersState extends State<Vouchers> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Flexible(
-                          child: Row(
-                            children: const [
-                              Text('Total Receipt'),
-                              SizedBox(
-                                width: 90,
-                              ),
-                              Text(
-                                'Sales Voucher',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.blue,
-                                    fontStyle: FontStyle.italic),
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          children: const [
+                            Text('Total Receipt'),
+                            SizedBox(
+                              width: 90,
+                            ),
+                            Text(
+                              'Sales Voucher',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blue,
+                                  fontStyle: FontStyle.italic),
+                            )
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -336,20 +332,19 @@ class _VouchersState extends State<Vouchers> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 20),
+                child: Text(
                   "Details",
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
                       color: Colors.blue),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const Expanded(child: ListviewControll()),
         ],
@@ -377,78 +372,73 @@ class _ListviewControllState extends State<ListviewControll> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-            future: getVoucherDetails(),
-            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemBuilder: (BuildContext, index) {
-                    var element = snapshot.data!.elementAt(index);
-                    //print(element);
-                    //var type= element['voucherType'];
-                    return Card(
-                      child: ListTile(
-                        tileColor: Colors.white60,
-                        leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: const Image(
-                              image: AssetImage("assets/voucherMoney.png"),
-                            )),
-                        title: Text(
-                          element['clientName'],
+    return FutureBuilder(
+        future: getVoucherDetails(),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, index) {
+                var element = snapshot.data!.elementAt(index);
+                //print(element);
+                //var type= element['voucherType'];
+                return Card(
+                  child: ListTile(
+                    tileColor: Colors.white60,
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: const Image(
+                          image: AssetImage("assets/voucherMoney.png"),
+                        )),
+                    title: Text(
+                      element['clientName'],
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, color: Colors.black),
+                    ),
+                    subtitle: Row(
+                      children: [
+                        const Text(
+                          'VoucherNo:',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.w300),
+                        ),
+                        Text(
+                          element['voucherNo'],
                           style: const TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                              color: Colors.green, fontWeight: FontWeight.bold),
                         ),
-                        subtitle: Row(
-                          children: [
-                            const Text(
-                              'VoucherNo:',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            Text(
-                              element['voucherNo'],
-                              style: const TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                      ],
+                    ),
+                    trailing: Wrap(
+                      spacing: 12,
+                      children: <Widget>[
+                        const Text(
+                          'QR.',
+                          style: TextStyle(color: Colors.amber),
                         ),
-                        trailing: Wrap(
-                          spacing: 12,
-                          children: <Widget>[
-                            const Text(
-                              'QR.',
-                              style: TextStyle(color: Colors.amber),
-                            ),
-                            Text(
-                              element['voucherAmount'],
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
+                        Text(
+                          element['voucherAmount'],
+                          style: const TextStyle(color: Colors.black),
                         ),
-                      ),
-                      elevation: 1,
-                    );
-                  },
-                  itemCount: snapshot.data!.length,
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  padding: const EdgeInsets.all(5),
-                  scrollDirection: Axis.vertical,
+                      ],
+                    ),
+                  ),
+                  elevation: 1,
                 );
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text("no data found"),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            }),
-      ],
-    );
+              },
+
+              // physics: const ScrollPhysics(),
+              // padding: const EdgeInsets.all(5),
+              // scrollDirection: Axis.vertical,
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("no data found"),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }

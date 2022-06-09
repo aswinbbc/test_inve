@@ -40,16 +40,16 @@ class CashSummary extends StatefulWidget {
 }
 
 class _CashSummaryState extends State<CashSummary> {
-  List<MyCard> cards = [];
+  // List<MyCard> cards = [];
   //late List<summaryreport> widList;
   Future<List<summaryreport>> getReport() async {
     DateTime today = DateTime.now();
-    List Value = await cashSummaryReport(today);
+    List value = await cashSummaryReport(today);
     // print(Value);
-    Value.forEach((element) {
-      print(element);
-    });
-    List<summaryreport> widList = Value.map((element) {
+    // Value.forEach((element) {
+    //   print(element);
+    // });
+    List<summaryreport> widList = value.map((element) {
       // print(DateTime.parse(element['summarydate']));
       return summaryreport(
         date: DateTime.parse(element['summarydate']),
