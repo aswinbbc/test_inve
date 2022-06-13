@@ -4,6 +4,8 @@ import 'package:amber_erp/components/text_field_box.dart';
 import 'package:amber_erp/models/authentication.dart';
 import 'package:flutter/material.dart';
 
+import '../models/network_service.dart';
+
 class Sign_up extends StatefulWidget {
   const Sign_up({Key? key}) : super(key: key);
 
@@ -37,221 +39,212 @@ class _Sign_upState extends State<Sign_up> {
     return Scaffold(
       appBar: AppBar(title: const Text("Registration")),
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          child: Container(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: Column(
-                  children: [
-                    //  Center(
-                    //     child: GestureDetector(
-                    //         onTap: () {
-                    //           _showDialog(context);
-                    //         },
-                    //         child: Text( 'Hello World', )
-                    //     )
-                    // ),
+      body: Padding(
+        padding: const EdgeInsets.only(right: 20, left: 20),
+        child: ListView(
+          children: [
+            //  Center(
+            //     child: GestureDetector(
+            //         onTap: () {
+            //           _showDialog(context);
+            //         },
+            //         child: Text( 'Hello World', )
+            //     )
+            // ),
 
-                    const Text(
-                      "CreateAccount",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "Already a member?",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          width: screenWidth * 0.01,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: TextButton(
-                            child: const Text("Log in"),
-                            style: TextButton.styleFrom(primary: Colors.blue),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Login_page()));
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "firstname",
-                      icon: const Icon(Icons.person),
-                      myTextController: _firstNameController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "lastname",
-                      icon: const Icon(Icons.person),
-                      myTextController: _lastNameController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Username",
-                      icon: const Icon(Icons.person),
-                      myTextController: _userNameController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Password",
-                      icon: const Icon(Icons.lock),
-                      myTextController: _passwordController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Confirm Password",
-                      icon: const Icon(Icons.lock),
-                      myTextController: _confPassController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "QID",
-                      myTextController: _qidController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Mobile No",
-                      myTextController: _mobController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Email Id",
-                      icon: const Icon(Icons.email),
-                      myTextController: _emailController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Shop Name",
-                      myTextController: _shopController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                      name: "Location",
-                      myTextController: _locationController,
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    myTextField(
-                        name: "Client Code",
-                        myTextController: _clientcodeController),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    MyDropDown_Software(
-                      changedSoftware: (value) {
-                        softwareValue = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    MyDropDown(
-                      changedValue: (value) {
-                        categoryValue = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.02,
-                    ),
-                    MyDropDown_Designation(
-                      changedDesignation: (value) {
-                        designatedValue = value;
-                      },
-                    ),
-
-                    Wrap(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                            value: agree,
-                            onChanged: (value) {
-                              setState(() {
-                                agree = value ?? false;
-                              });
-                            },
-                          ),
-                        ),
-                        RichText(
-                            text: TextSpan(children: <TextSpan>[
-                          TextSpan(
-                              text: "You have read and agree to our",
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5))),
-                          const TextSpan(
-                              text: "Data Policy",
-                              style: TextStyle(color: Colors.blue)),
-                          TextSpan(
-                              text: "and",
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5))),
-                          const TextSpan(
-                              text: "Terms",
-                              style: TextStyle(color: Colors.blue)),
-                        ]))
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: screenHeight * 0.01,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blue, onPrimary: Colors.white),
-                      onPressed: agree ? getData : null,
-                      child: const Text("Submit"),
-                    ),
-                    //onPressed: (){getData();},child: Text("Submit"),),
-                  ],
-                ),
+            const Text(
+              "CreateAccount",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-          ),
+            Row(
+              children: [
+                const Text(
+                  "Already a member?",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  width: screenWidth * 0.01,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: TextButton(
+                    child: const Text("Log in"),
+                    style: TextButton.styleFrom(primary: Colors.blue),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "firstname",
+              icon: const Icon(Icons.person),
+              myTextController: _firstNameController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "lastname",
+              icon: const Icon(Icons.person),
+              myTextController: _lastNameController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Username",
+              icon: const Icon(Icons.person),
+              myTextController: _userNameController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Password",
+              icon: const Icon(Icons.lock),
+              myTextController: _passwordController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Confirm Password",
+              icon: const Icon(Icons.lock),
+              myTextController: _confPassController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "QID",
+              myTextController: _qidController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Mobile No",
+              myTextController: _mobController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Email Id",
+              icon: const Icon(Icons.email),
+              myTextController: _emailController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Shop Name",
+              myTextController: _shopController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+              name: "Location",
+              myTextController: _locationController,
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            myTextField(
+                name: "Client Code", myTextController: _clientcodeController),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            MyDropDown_Software(
+              changedSoftware: (value) {
+                softwareValue = value;
+              },
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            MyDropDown(
+              changedValue: (value) {
+                categoryValue = value;
+              },
+            ),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            MyDropDown_Designation(
+              changedDesignation: (value) {
+                designatedValue = value;
+              },
+            ),
+
+            Wrap(
+              children: [
+                Checkbox(
+                  value: agree,
+                  onChanged: (value) {
+                    setState(() {
+                      agree = value ?? false;
+                    });
+                  },
+                ),
+                RichText(
+                    text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: "You have read and agree to our",
+                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
+                  const TextSpan(
+                      text: "Data Policy",
+                      style: TextStyle(color: Colors.blue)),
+                  TextSpan(
+                      text: "and",
+                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
+                  const TextSpan(
+                      text: "Terms", style: TextStyle(color: Colors.blue)),
+                ]))
+              ],
+            ),
+
+            SizedBox(
+              height: screenHeight * 0.01,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.blue, onPrimary: Colors.white),
+                    onPressed: agree ? getData : null,
+                    child: const Text("Submit"),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: screenHeight * 0.01,
+            ),
+            //onPressed: (){getData();},child: Text("Submit"),),
+          ],
         ),
       ),
     );
   }
 
   void getData() async {
+    String txtFingerPrint = await getUid();
     String txtfirstname = _firstNameController.text;
     String txtlastname = _lastNameController.text;
     String txtusername = _userNameController.text;
@@ -281,7 +274,8 @@ class _Sign_upState extends State<Sign_up> {
       "clientcode": txtclientcode,
       "softwarename": txtsoftware,
       "category": txtcategory,
-      "designation": txtdesignation
+      "designation": txtdesignation,
+      "fingerprint": txtFingerPrint,
     };
 
     UserAuth().login(params).then((value) {

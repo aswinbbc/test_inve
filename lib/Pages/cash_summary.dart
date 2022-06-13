@@ -49,20 +49,24 @@ class _CashSummaryState extends State<CashSummary> {
     // Value.forEach((element) {
     //   print(element);
     // });
-    List<summaryreport> widList = value.map((element) {
-      // print(DateTime.parse(element['summarydate']));
-      return summaryreport(
-        date: DateTime.parse(element['summarydate']),
-        salesAmount: double.parse(element['salesamount']),
-        salesReturn: double.parse(element['salesreturn']),
-        purchaseAmount: double.parse(element['purchaseamount']),
-        purchaseReturn: double.parse(element['purchasereturn']),
-        receivables: double.parse(element['receivables']),
-        payables: double.parse(element['payables']),
-        otherIncome: double.parse(element['othericome']),
-        otherExpense: double.parse(element['otherexpense']),
-      );
-    }).toList();
+    List<summaryreport> widList = value
+        .map((element) {
+          // print(DateTime.parse(element['summarydate']));
+          return summaryreport(
+            date: DateTime.parse(element['summarydate']),
+            salesAmount: double.parse(element['salesamount']),
+            salesReturn: double.parse(element['salesreturn']),
+            purchaseAmount: double.parse(element['purchaseamount']),
+            purchaseReturn: double.parse(element['purchasereturn']),
+            receivables: double.parse(element['receivables']),
+            payables: double.parse(element['payables']),
+            otherIncome: double.parse(element['othericome']),
+            otherExpense: double.parse(element['otherexpense']),
+          );
+        })
+        .toList()
+        .reversed
+        .toList();
     print(widList.first.date);
     // print(widList[0].salesAmount);
     return widList;

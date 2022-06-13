@@ -4,10 +4,13 @@ import 'package:amber_erp/Pages/product_search.dart';
 import 'package:amber_erp/Pages/tutorial_video.dart';
 import 'package:amber_erp/Pages/wats_new_page.dart';
 import 'package:amber_erp/SideBar/menu_item.dart';
+import 'package:amber_erp/models/network_service.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:amber_erp/models/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/report_dropdown.dart';
 
 class MySideBar extends StatefulWidget {
   const MySideBar({Key? key}) : super(key: key);
@@ -121,7 +124,8 @@ class _MySideBarState extends State<MySideBar>
                               await SharedPreferences.getInstance();
                           var txtuser = prefs.getString('user_name').toString();
                           var txtPass = prefs.getString('pass_word').toString();
-                          UserLogin().login(txtuser, txtPass);
+                          var uid = await getUid();
+                          UserLogin().login(txtuser, txtPass, uid);
                           // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductSearch()));
                         },
                         child: Padding(
@@ -184,14 +188,21 @@ class _MySideBarState extends State<MySideBar>
                         onTap: () {
                           onIconPressed();
                         }),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "Reports",
-                        onTap: () {
-                          onIconPressed();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const CommonReports()));
-                        }),
+                    // MyMenuItem(
+                    //     icon: Icons.home,
+                    //     title: "Reports",
+                    //     onTap: () {
+                    //       onIconPressed();
+                    //       Navigator.of(context).push(MaterialPageRoute(
+                    //           builder: (context) => const CommonReports()));
+                    //     }),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 18.0, left: 32.0, right: 32.0),
+                      child: ReportDropdown(
+                        text: 'Report',
+                      ),
+                    ),
                     Divider(
                       height: 64,
                       thickness: 0.5,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/constant.dart';
 import 'login_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,14 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Align(
             alignment: Alignment.bottomLeft,
-            child: Lottie.network(
-              'https://assets6.lottiefiles.com/packages/lf20_lrvt3krh.json',
-            ),
+            child: Lottie.asset('assets/confetti.json', fit: BoxFit.fitWidth),
           ),
           Align(
             alignment: Alignment.topCenter,
-            child: Lottie.network(
-              'https://assets6.lottiefiles.com/packages/lf20_fJ7CVd.json',
+            child: Lottie.asset(
+              'assets/celebration.json',
             ),
           ),
           FutureBuilder(

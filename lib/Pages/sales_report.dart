@@ -18,7 +18,7 @@ class _SalesReportState extends State<SalesReport> {
         .map((element) => report(
             clientName: element['CustomerName'],
             salesAmount: double.parse(element['SaleAmount']),
-            paymentMode: element['PaymentMode']))
+            paymentMode: element['Mode']))
         .toList();
 
     return widList;
@@ -81,7 +81,7 @@ class _SalesReportState extends State<SalesReport> {
                           child: ListTile(
                               title: const Text("Total amount :"),
                               trailing: Text(
-                                "$total",
+                                total.toStringAsFixed(2),
                                 style: Theme.of(context).textTheme.headline6,
                               )),
                         ),

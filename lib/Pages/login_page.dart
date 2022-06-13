@@ -1,8 +1,13 @@
 import 'package:amber_erp/SideBar/side_bar_layout.dart';
 import 'package:amber_erp/main.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amber_erp/models/authentication.dart';
+
+import '../models/network_service.dart';
+import '../utils/constant.dart';
 
 class Login_page extends StatefulWidget {
   const Login_page({Key? key}) : super(key: key);
@@ -16,6 +21,13 @@ class _Login_pageState extends State<Login_page> {
   bool _isChecked = false;
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+
+  String deviceId = "Change device.";
+  @override
+  void initState() {
+    getPrefilled();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +128,12 @@ class _Login_pageState extends State<Login_page> {
                     Row(
                       children: [
                         Checkbox(
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            ),
                             activeColor: Colors.white,
-                            checkColor: Colors.black,
+                            checkColor: Colors.blue,
                             value: _isChecked,
                             onChanged: (changedvalue) {
                               setState(() {
@@ -150,9 +166,16 @@ class _Login_pageState extends State<Login_page> {
                                   TextStyle(color: Colors.blue, fontSize: 25),
                             ))),
                     TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Forgot Password ?",
+                        onPressed: () async {
+                          String uid = await getUid();
+                          setState(() {
+                            deviceId = "Device ID:$uid";
+                            Clipboard.setData(ClipboardData(text: uid));
+                            showMessage("Id copied");
+                          });
+                        },
+                        child: Text(
+                          deviceId,
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         )),
                     Container(
@@ -191,26 +214,26 @@ class _Login_pageState extends State<Login_page> {
     );
   }
 
-  void handleRememberme() {
-    if (_isChecked) {
-      SharedPreferences.getInstance().then(
-        (pref) {
-          pref.setString('Username', _userController.text);
-          pref.setString('Password', _passController.text);
-        },
-      );
-    }
+  getPrefilled() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      _userController.text = pref.getString(KEY_USERNAME) ?? "";
+      _passController.text = pref.getString(KEY_PASSWORD) ?? "";
+    });
+  }
 
-    var username = "";
+  Future<void> handleRememberme() async {
     String txtuser = _userController.text;
     String txtPass = _passController.text;
-    UserLogin().login(txtuser, txtPass).then((value) async {
-      GetUser() async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        username = prefs.getString('user_name').toString();
-        // final clientId = prefs.getString('client_id').toString();
-      }
+    final pref = await SharedPreferences.getInstance();
+    bool status = await pref.setString(KEY_USERNAME, _isChecked ? txtuser : "");
+    await pref.setString(KEY_PASSWORD, _isChecked ? txtPass : "");
+    print(status);
+    var username = "";
+    getPrefilled();
 
+    String txtFingerPrint = await getUid();
+    UserLogin().login(txtuser, txtPass, txtFingerPrint).then((value) async {
       if (value == "User Successfully LoggedIn") {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const MySidebarLayout()));

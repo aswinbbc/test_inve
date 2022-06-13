@@ -1,6 +1,8 @@
 import 'package:amber_erp/Pages/HomeScreen.dart';
 import 'package:amber_erp/Pages/cash_summary.dart';
 import 'package:amber_erp/Pages/profit_report.dart';
+import 'package:amber_erp/Pages/purchase_report.dart';
+import 'package:amber_erp/Pages/qtn_report.dart';
 import 'package:amber_erp/Pages/sales_report.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -33,6 +35,14 @@ class _MyGridviewState extends State<MyGridview> {
             if (data.title == 'SalesReport') {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const SalesReport()));
+            }
+            if (data.title == 'PurchaseReport') {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const PurchaseReport()));
+            }
+            if (data.title == 'QuotationReport') {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const QuotationReport()));
             }
 
             if (data.title == 'CashSummary') {

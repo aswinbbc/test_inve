@@ -3,7 +3,6 @@ import 'package:amber_erp/Pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const SAVE_KEY_NAME = 'UserLogedIn';
 void main() {
   runApp(const MyApp());
 }

@@ -115,7 +115,7 @@ class _VouchersState extends State<Vouchers> {
                               width: 10,
                             ),
                             Text(
-                              pv.toString(),
+                              pv.toStringAsFixed(2),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
@@ -180,7 +180,7 @@ class _VouchersState extends State<Vouchers> {
                               width: 10,
                             ),
                             Text(
-                              rv.toString(),
+                              rv.toStringAsFixed(2),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.green,
@@ -245,7 +245,7 @@ class _VouchersState extends State<Vouchers> {
                               width: 10,
                             ),
                             Text(
-                              sc.toString(),
+                              sc.toStringAsFixed(2),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.green,
@@ -310,7 +310,7 @@ class _VouchersState extends State<Vouchers> {
                               width: 10,
                             ),
                             Text(
-                              pc.toString(),
+                              pc.toStringAsFixed(2),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,

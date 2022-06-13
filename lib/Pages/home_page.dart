@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:amber_erp/components/app_bar.dart';
 import 'package:get/get.dart';
 
+import '../components/report_dropdown.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,19 +21,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int index = 0;
-  final gridItems = [
-    GridData('https://assets5.lottiefiles.com/packages/lf20_wpr8vxxt.json',
-        "Dashbord"),
-    GridData("https://assets3.lottiefiles.com/private_files/lf30_rkzommaq.json",
-        "SalesReport"),
-    GridData("https://assets6.lottiefiles.com/packages/lf20_bnecesf3.json",
-        "CashSummary"),
-    GridData("https://assets8.lottiefiles.com/packages/lf20_zprfc7im.json",
-        "ProfitReport"),
-    GridData("https://assets5.lottiefiles.com/packages/lf20_svfmrsni.json",
-        "PurchaseReport"),
-    GridData("https://assets3.lottiefiles.com/packages/lf20_nn7raoys.json",
-        "QuotationReport"),
+
+  final _pages = [
+    MenuPage(),
+    const MailPage(),
+    const SupportPage(),
+    const SettingsPage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -40,15 +35,7 @@ class _HomePageState extends State<HomePage> {
         preferredSize: Size.fromHeight(70),
         child: MyAppbar(),
       ),
-      body: Column(
-        children: [
-          const MyBannerImage(),
-          Expanded(
-              child: MyGridview(
-            listData: gridItems,
-          ))
-        ],
-      ),
+      body: _pages[index],
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.red,
           child: const Icon(Icons.add),
@@ -64,22 +51,59 @@ class _HomePageState extends State<HomePage> {
   void onChangedTab(int index) {
     setState(() {
       this.index = index;
-      if (index == 2) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const SupportPage()));
-      }
-      if (index == 0) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const SearchPage()));
-      }
-      if (index == 1) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const MailPage()));
-      }
-      if (index == 3) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const SettingsPage()));
-      }
+      // if (index == 2) {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => const SupportPage()));
+      // }
+      // if (index == 0) {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => const SearchPage()));
+      // }
+      // if (index == 1) {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => const MailPage()));
+      // }
+      // if (index == 3) {
+      //   Navigator.of(context).push(
+      //       MaterialPageRoute(builder: (context) => const SettingsPage()));
+      // }
     });
+  }
+}
+
+class MenuPage extends StatelessWidget {
+  MenuPage({Key? key}) : super(key: key);
+  final gridItems = [
+    GridData('https://assets5.lottiefiles.com/packages/lf20_wpr8vxxt.json',
+        "Dashbord"),
+    GridData("https://assets3.lottiefiles.com/private_files/lf30_rkzommaq.json",
+        "SalesReport"),
+    GridData("https://assets5.lottiefiles.com/packages/lf20_svfmrsni.json",
+        "PurchaseReport"),
+    GridData("https://assets3.lottiefiles.com/packages/lf20_nn7raoys.json",
+        "QuotationReport"),
+    GridData("https://assets6.lottiefiles.com/packages/lf20_bnecesf3.json",
+        "CashSummary"),
+    GridData("https://assets8.lottiefiles.com/packages/lf20_zprfc7im.json",
+        "ProfitReport"),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const MyBannerImage(),
+        // Padding(
+        //   padding: EdgeInsets.only(top: 18.0, left: 32.0, right: 32.0),
+        //   child: ReportDropdown(
+        //     text: 'Report',
+        //   ),
+        // ),
+        Expanded(
+            child: MyGridview(
+          listData: gridItems,
+        )),
+      ],
+    );
   }
 }

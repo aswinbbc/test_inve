@@ -25,10 +25,14 @@ class UserAuth {
 }
 
 class UserLogin {
-  Future<String> login(String? username, String? pass) async {
+  Future<String> login(
+      String? username, String? pass, String fingerprint) async {
     // var data = await getData("http://10.0.2.2:8080/Amber/login.php",params:{'uname':username,'pass':pass});
-    var data = await getData("${Url}login.php",
-        params: {'uname': username, 'pass': pass});
+    var data = await getData("${Url}login.php", params: {
+      'uname': username,
+      'pass': pass,
+      'fingerprint': fingerprint,
+    });
     //print('gggggggyyyyyyyyy$data');
     List<dynamic> Report = [];
     Report = data['clientId'];

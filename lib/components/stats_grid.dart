@@ -48,7 +48,7 @@ class _StatsGridState extends State<StatsGrid> {
       height: MediaQuery.of(context).size.height * 0.25,
       child: Column(
         children: <Widget>[
-          Flexible(
+          Expanded(
               child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
