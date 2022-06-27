@@ -1,24 +1,32 @@
 //import 'dart:html';
 
 import 'package:amber_erp/models/authentication.dart';
+import 'package:amber_erp/models/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class WatsNewPage extends StatefulWidget {
-  const WatsNewPage({Key? key}) : super(key: key);
+import '../utils/constant.dart';
+
+class CustomerNotification extends StatefulWidget {
+  const CustomerNotification({Key? key}) : super(key: key);
 
   @override
   _WatsNewPageState createState() => _WatsNewPageState();
+
 }
 
-class _WatsNewPageState extends State<WatsNewPage> {
+class _WatsNewPageState extends State<CustomerNotification> {
   List<dynamic> Report = [];
   Future<List> getWatsNew() async {
     // DateTime today = DateTime.now();
-    WatsnewMaster().watsnewdetails().then((value) {
+    CustumNotification().notificationdetails().then((value) async {
       List<dynamic> list = (value as List).reversed.toList();
-
+      final pref = await SharedPreferences.getInstance();
+      bool status = await pref.setInt(KEY_NOTIFICATION_LENGTH, list.length);
+      Provider.of<NotificationProvider>(context,listen: false).setNotificationLength = list.length;
       setState(() {
         Report = list;
       });
@@ -31,7 +39,7 @@ class _WatsNewPageState extends State<WatsNewPage> {
     double width = MediaQuery.of(context).size.width * 0.6;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Wat's New"),
+        title: const Text("Notification"),
       ),
       body: FutureBuilder(
           future: getWatsNew(),
@@ -44,7 +52,7 @@ class _WatsNewPageState extends State<WatsNewPage> {
                   return SingleCard(
                     title: element['title'],
                     description: element['subTitle'],
-                    version: element['versionNo'],
+                    version: element['date'],
                   );
                 },
               );
@@ -86,25 +94,27 @@ class SingleCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Lottie.network(
-                        'https://assets9.lottiefiles.com/packages/lf20_3yoqcnbq.json',
-                        height: 50),
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Wrap(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                title,
-                                style: const TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.w600),
+                              Row(
+                                children: [
+                                  Lottie.network(
+                                      'https://assets9.lottiefiles.com/temp/lf20_7BmGsm.json',
+                                      height: 50),
+                                  Text(
+                                    title,
+                                    style: const TextStyle(
+                                        fontSize: 19, fontWeight: FontWeight.w600),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("version : $version"),
-                              )
+
                             ],
                           ),
                           const SizedBox(
@@ -121,6 +131,10 @@ class SingleCard extends StatelessWidget {
                             trimExpandedText: 'Show less',
                             style: const TextStyle(color: Colors.black),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Chip(label: Text("$version")),
+                          )
                         ],
                       ),
                     ),

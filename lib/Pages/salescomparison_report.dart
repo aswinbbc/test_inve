@@ -13,10 +13,7 @@ class _SalesComparisonState extends State<SalesComparison> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(mytitle: "Salescomparison Report",),
-      ),
+      appBar: AppBar(title: Text("Salescomparison Report"),),
       body: const MonthlyDashBord(),
     );
   }

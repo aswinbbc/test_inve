@@ -252,7 +252,7 @@ class _VideoHomeState extends State<VideoHome> {
              });
             },
           ),
-          FlatButton(onPressed: ()async{
+          ElevatedButton(onPressed: ()async{
             final index = _isPlayingIndex-1;
             if(index>=0&&Vedioinfo.length>=0){
               _initializeVideo(index);
@@ -274,7 +274,7 @@ class _VideoHomeState extends State<VideoHome> {
             size: 36,
             color: Colors.white,
           )),
-          FlatButton(onPressed: ()async{
+          ElevatedButton(onPressed: ()async{
             if(_isPlaying){
               setState(() {
                 _isPlaying=false;
@@ -290,7 +290,7 @@ class _VideoHomeState extends State<VideoHome> {
             size: 36,
             color: Colors.white,
           )),
-          FlatButton(onPressed: ()async{
+          ElevatedButton(onPressed: ()async{
            final index= _isPlayingIndex+1;
            if(index<=Vedioinfo.length-1){
              _initializeVideo(index);

@@ -26,12 +26,7 @@ class _PosReconcilationState extends State<PosReconcilation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(
-          mytitle: "Pos reconcilation Report",
-        ),
-      ),
+      appBar: AppBar(title: Text("Pos reconcilation Report"),),
       backgroundColor: Colors.white,
       body: FutureBuilder(
           future: getReconcilation(),

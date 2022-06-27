@@ -4,6 +4,7 @@
 import 'package:amber_erp/SideBar/side_bar_layout.dart';
 import 'package:amber_erp/main.dart';
 import 'package:flutter/material.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +21,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    checkUserLoggedInn();
+
+
     super.initState();
   }
 
@@ -45,8 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (cont) => const Login_page()));
+                  checkUserLoggedInn();
                 });
               }
               return Center(
@@ -74,8 +75,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final _sharedPref = await SharedPreferences.getInstance();
     final _userLoggedIn = _sharedPref.getBool(SAVE_KEY_NAME);
     if (_userLoggedIn == null || _userLoggedIn == false) {
-      GotoLogin();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (cont) => const Login_page()));
     } else {
+
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const MySidebarLayout()));
     }

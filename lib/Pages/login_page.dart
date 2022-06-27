@@ -158,7 +158,8 @@ class _Login_pageState extends State<Login_page> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
-                        child: FlatButton(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.white),
                             onPressed: handleRememberme,
                             child: const Text(
                               "Sign In",

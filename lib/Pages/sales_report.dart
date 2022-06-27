@@ -13,12 +13,12 @@ class _SalesReportState extends State<SalesReport> {
   Future<List<report>> getData() async {
     DateTime today = DateTime.now();
     List value = await getSalesReport(today);
-    print(value);
+   // print("ffffff$value");
     List<report> widList = value
         .map((element) => report(
             clientName: element['CustomerName'],
             salesAmount: double.parse(element['SaleAmount']),
-            paymentMode: element['Mode']))
+            paymentMode: element['PaymentMode']))
         .toList();
 
     return widList;
@@ -49,7 +49,7 @@ class _SalesReportState extends State<SalesReport> {
                           columns: const <DataColumn>[
                             DataColumn(label: Text("ClientName")),
                             DataColumn(label: Text("SaleAmount")),
-                            DataColumn(label: Text("PaymentMode")),
+                            DataColumn(label: Text("Mode")),
                           ],
                           rows: reportList!.map(
                             (element) {

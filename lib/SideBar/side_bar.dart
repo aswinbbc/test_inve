@@ -5,11 +5,17 @@ import 'package:amber_erp/Pages/tutorial_video.dart';
 import 'package:amber_erp/Pages/wats_new_page.dart';
 import 'package:amber_erp/SideBar/menu_item.dart';
 import 'package:amber_erp/models/network_service.dart';
+import 'package:amber_erp/utils/constant.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:amber_erp/models/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../Pages/login_page.dart';
+import '../Pages/notification_page.dart';
 import '../components/report_dropdown.dart';
 
 class MySideBar extends StatefulWidget {
@@ -105,10 +111,10 @@ class _MySideBarState extends State<MySideBar>
                   child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 color: Colors.blue,
-                child: Column(
+                child: ListView(
                   children: <Widget>[
                     const SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     ListTile(
                       title: Text(
@@ -152,6 +158,13 @@ class _MySideBarState extends State<MySideBar>
                       indent: 32,
                       endIndent: 32,
                     ),
+                    Padding(
+                      padding:
+                      EdgeInsets.only(top: 18.0, left: 18.0, right: 32.0),
+                      child: ReportDropdown(
+                        text: 'Report',
+                      ),
+                    ),
                     MyMenuItem(
                         icon: Icons.home,
                         title: "Wat's New",
@@ -187,6 +200,14 @@ class _MySideBarState extends State<MySideBar>
                         title: "News",
                         onTap: () {
                           onIconPressed();
+                          Get.to(()=>NotificationPage());
+                        }),MyMenuItem(
+                        icon: Icons.home,
+                        title: "Leave a feedback",
+                        onTap: () async {
+                          await launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLScH0fvmEPA__GXxUqFvPdW0_pY3YMPLJzY2jZGGxAf5Cu7DiA/viewform?usp=sf_link"));
+
+                          onIconPressed();
                         }),
                     // MyMenuItem(
                     //     icon: Icons.home,
@@ -196,13 +217,7 @@ class _MySideBarState extends State<MySideBar>
                     //       Navigator.of(context).push(MaterialPageRoute(
                     //           builder: (context) => const CommonReports()));
                     //     }),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 18.0, left: 32.0, right: 32.0),
-                      child: ReportDropdown(
-                        text: 'Report',
-                      ),
-                    ),
+
                     Divider(
                       height: 64,
                       thickness: 0.5,
@@ -217,10 +232,12 @@ class _MySideBarState extends State<MySideBar>
                     // ),
                     Card(
                       elevation: 0,
-                      child: ListTile(
-                        title: GestureDetector(
-                          onTap: () {},
-                          child: Padding(
+                      child: GestureDetector(
+                        onTap: () {
+                          _showMyDialog();
+                        },
+                        child:ListTile(
+                        title:  Padding(
                             padding: const EdgeInsets.all(16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +259,19 @@ class _MySideBarState extends State<MySideBar>
                           ),
                         ),
                       ),
-                    )
+                    ),
+
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 25.0,left: 25,right: 25),
+                        child: Column(
+                          children: [
+                            // Divider(color: Colors.white),
+                            _buildBody()
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )),
@@ -273,6 +302,82 @@ class _MySideBarState extends State<MySideBar>
       },
     );
   }
+  Widget _buildBody() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(onTap: () async {
+            await launchUrl(Uri.parse("https://www.amalgamatetechnologies.com/"));
+          },
+            child: AutoSizeText(
+              'AMALGAMATE',
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: 100,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Divider(color: Colors.black),
+          AutoSizeText.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Advanced',
+                ),
+                TextSpan(
+                  text: ' urban',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: ' lighting solution',
+                ),
+              ],
+            ),
+            style: TextStyle(fontSize: 100),
+            maxLines: 1,
+          ),
+        ],
+      ),
+    );
+  }
+
+
+   _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are You Sure You Want to Logout?'),
+          content: const SingleChildScrollView(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () async {
+                final _sharedPrefs = await SharedPreferences.getInstance();
+                _sharedPrefs.remove(SAVE_KEY_NAME);
+                //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login_page()));
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (ctx) => const Login_page()),
+                        (route) => false);
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class CustomMenuClipper extends CustomClipper<Path> {
@@ -299,4 +404,5 @@ class CustomMenuClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
   }
+
 }

@@ -307,7 +307,7 @@ void _showDialogMessage(BuildContext context, String Data) {
         title: const Text("Message"),
         content: Text(Data),
         actions: <Widget>[
-          FlatButton(
+          ElevatedButton(
             child: const Text("Close"),
             onPressed: () {
               Navigator.of(context).pop();

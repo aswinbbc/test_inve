@@ -1,5 +1,6 @@
 import 'package:amber_erp/components/appbar_normal.dart';
 import 'package:amber_erp/models/authentication.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 class ChequeNotificationReceived extends StatefulWidget {
   const ChequeNotificationReceived({Key? key}) : super(key: key);
@@ -35,10 +36,7 @@ class _ChequeNotificationReceivedState extends State<ChequeNotificationReceived>
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(mytitle: "Bank Reconcilation(Rvd)",),
-      ),
+      appBar: AppBar(title: Text("Bank Reconcilation(Rvd)"),),
       body: SafeArea(
         child: ListView.builder(
           itemCount: Report.length,
@@ -56,14 +54,20 @@ class _ChequeNotificationReceivedState extends State<ChequeNotificationReceived>
                 child: Column(children: [
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(element['clientName'],style: const TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                      Expanded(flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: AutoSizeText(element['clientName'],
+                            maxLines: 1,
+                            style: const TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                        ),
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(element['pdcDate'],style: const TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.bold),),
+                      // const Spacer(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Text(element['pdcDate'],style: const TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.bold),),
+                        ),
                       ),
                     ],
                   ),

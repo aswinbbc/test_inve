@@ -1,6 +1,8 @@
 import 'package:amber_erp/components/appbar_normal.dart';
 import 'package:amber_erp/models/authentication.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class ProfitReport extends StatefulWidget {
 
@@ -28,12 +30,7 @@ return Report;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(
-          mytitle: "Profit Report",
-        ),
-      ),
+      appBar: AppBar(title: Text("Profit Report"),),
       body: FutureBuilder(
         future: getProfit(),
         builder: (BuildContext context,
@@ -43,14 +40,44 @@ return Report;
                return ListView.builder(itemBuilder: (BuildContext,index){
                  var element = Report.elementAt(index);
                  //print(element['salesdate']);
-                 return Card(
-                   child: ListTile(
-                     leading: CircleAvatar(child: Text(element['profitamount']),radius: 30,),
-                     title: Text(element['salesamount'],style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.green),),
-                     subtitle: Text(element['costamount'],style: const TextStyle(color: Colors.red),),
-                     trailing: Text(element['salesdate']),
-                   ),
-                   elevation: 5,
+                 return Card(color: Colors.blueGrey[100],shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         Row(
+                           children: [
+                             Icon(Icons.bar_chart,size: 75),
+                     Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 8.0),
+                               child: Text('Sales : ${element['salesamount']}',style: const TextStyle(fontWeight: FontWeight.w600,),),
+                             ),
+
+                             Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 8.0),
+                               child: Text('Cost : ${element['costamount']}',),
+                             ),
+                       ],
+                     ),
+                           ],
+                         ),
+                     Container(margin: EdgeInsets.only(bottom: 8),
+                       padding: const EdgeInsets.all(8.0),
+
+                       child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+                           Chip(
+                             label: Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Text('${element['salesdate']}'),
+                             ),
+                           ),Text('Profit : ${element['profitamount']}',style: const TextStyle(color: Colors.blue,fontWeight: FontWeight.w700,),),
+                         ],
+                       ),
+                     )
+                   ]),
+                   elevation: 3,
                  );
                },
                  itemCount: Report.length,

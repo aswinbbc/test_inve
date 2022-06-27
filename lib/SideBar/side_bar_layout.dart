@@ -9,7 +9,8 @@ class MySidebarLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: const <Widget>[
+        children:  <Widget>[
+
           HomePage(),
           MySideBar(),
         ],

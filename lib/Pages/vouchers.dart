@@ -50,12 +50,7 @@ class _VouchersState extends State<Vouchers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(
-          mytitle: "Voucher Report",
-        ),
-      ),
+      appBar: AppBar(title: Text("Voucher Report"),),
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[

@@ -1,6 +1,9 @@
 import 'package:amber_erp/components/appbar_normal.dart';
 import 'package:amber_erp/models/authentication.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryProfit extends StatefulWidget {
   const CategoryProfit({Key? key}) : super(key: key);
@@ -30,12 +33,7 @@ class _CategoryProfitState extends State<CategoryProfit> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(
-          mytitle: "Categoryprofit Report",
-        ),
-      ),
+      appBar: AppBar(title: Text("Categoryprofit Report"),),
       body: FutureBuilder(
           future: getCategoryProfit(),
           builder: (BuildContext context,
@@ -45,16 +43,43 @@ class _CategoryProfitState extends State<CategoryProfit> {
               return ListView.builder(itemBuilder: (BuildContext,index){
                 var element = Report.elementAt(index);
                 //print(element['salesdate']);
-                return Card(
-                  child: ListTile(tileColor: Colors.amber,
-                    leading: CircleAvatar(child: Text(element['catProfit']),radius: 30,),
-                    title: Text(element['catName'],style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.green),),
-                    subtitle: Text(element['catAmount'],style: const TextStyle(color: Colors.red),),
-                    trailing: Wrap(spacing:12,
-                        children:<Widget>[
-                      const Text("Cost:"),
-                        Text(element['catCost'],style: const TextStyle(color: Colors.white),)
-                    ]),
+                return Card(color: Colors.blueGrey[100],
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  child: ListTile(
+
+                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(FontAwesomeIcons.bell,size: 50),
+                            ),
+                            Column(mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(element['catName'].length > 20
+                                    ? element['catName']
+                                    .substring(0, 20) +
+                                    '..'
+                                    : element['catName'],overflow: TextOverflow.ellipsis,style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.blue),),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('sales : ${element['catAmount']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                            children:<Widget>[
+
+                              Text('cost : ${element['catCost']}'),
+                              Chip(label: Text('profit : ${element['catProfit']}',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w600),))
+                            ]),
+                      ],
+                    ),
+
                   ),
                   elevation: 5,
                 );

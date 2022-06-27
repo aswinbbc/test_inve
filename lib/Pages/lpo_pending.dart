@@ -1,5 +1,6 @@
 import 'package:amber_erp/components/appbar_normal.dart';
 import 'package:amber_erp/models/authentication.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class LpoPendingReport extends StatefulWidget {
@@ -34,10 +35,7 @@ class _LpoPendingReportState extends State<LpoPendingReport> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(mytitle: "Lpo Pending Report",),
-      ),
+      appBar: AppBar(title: Text("Lpo Pending Report"),),
       body: SafeArea(
         child: ListView.builder(
           itemCount: Report.length,
@@ -55,14 +53,20 @@ class _LpoPendingReportState extends State<LpoPendingReport> {
                 child: Column(children: [
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(element['supplierName'],style: const TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                      Expanded(flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: AutoSizeText(element['supplierName'],
+                            maxLines: 1,
+                            style: const TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),),
+                        ),
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(element['lpoDate'],style: const TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.bold),),
+                      // const Spacer(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Text(element['lpoDate'],style: const TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.bold),),
+                        ),
                       ),
                     ],
                   ),

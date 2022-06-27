@@ -35,10 +35,7 @@ class _PurchaseComparisonState extends State<PurchaseComparison> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBarNormal(mytitle: "Purchase Comparison",),
-      ),
+      appBar: AppBar(title: Text("Purchase Comparison"),),
       body: SafeArea(
           child: ListView.builder(
             itemCount: Report.length,
@@ -72,7 +69,7 @@ class _PurchaseComparisonState extends State<PurchaseComparison> {
                           const Image(image: AssetImage("assets/purchaseIcon.png"),height: 80,width: 80,),
                           Padding(
                             padding: const EdgeInsets.only(top: 20),
-                            child: Text(element['purchaseTotal'],style: const TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
+                            child: Text('${(double.parse(element['purchaseTotal'])).toStringAsFixed(2)}',style: const TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
 
                           ),
 

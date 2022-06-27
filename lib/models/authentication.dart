@@ -117,7 +117,7 @@ class DashMonthlyList {
     final params = {'currentyear': formatted, 'clientId': clientId};
     print(params);
     var data = await getData("${Url}MonthlyDashbord.php", params: params);
-    //print("wekreport = $data");
+    print("wekreport = $data");
     return data;
   }
 }
@@ -279,6 +279,14 @@ class ChequeMasterReceived {
 class WatsnewMaster {
   watsnewdetails() async {
     var data = await getData("${Url}Wats_new.php");
+
+    return data;
+  }
+}
+
+class CustumNotification {
+  notificationdetails() async {
+    var data = await getData("${Url}notification_view.php");
 
     return data;
   }

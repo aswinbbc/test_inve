@@ -8,6 +8,7 @@ import 'package:amber_erp/Pages/salescomparison_report.dart';
 import 'package:amber_erp/Pages/salesorder_report.dart';
 import 'package:amber_erp/Pages/stock_report.dart';
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../utils/constant.dart';
@@ -23,6 +24,7 @@ class MyAppbar extends StatefulWidget {
 class _MyAppbarState extends State<MyAppbar> {
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
       title: Padding(
         padding: const EdgeInsets.only(left: .05, top: 10),
@@ -145,7 +147,7 @@ class _MyAppbarState extends State<MyAppbar> {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, top: 10),
-          child: GestureDetector(child: const MyNotification()),
+          child: GestureDetector(child: const MyNotification(),),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, top: 10),

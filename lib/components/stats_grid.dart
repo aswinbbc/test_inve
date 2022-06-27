@@ -1,4 +1,5 @@
 import 'package:amber_erp/models/authentication.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,9 +54,10 @@ class _StatsGridState extends State<StatsGrid> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               _buildStartCard('TotalSales', salesAmount,
-                  isIconEnabled: true, icon: Icons.shopping_cart),
+                  isIconEnabled:
+                  (salesAmount.toString().length<=7), icon: Icons.shopping_cart),
               _buildStartCard('TotalReturn', salereturn,
-                  isIconEnabled: true, icon: Icons.numbers)
+                  isIconEnabled: (salereturn.toString().length<=7), icon: Icons.numbers)
             ],
           )),
           Row(
@@ -114,9 +116,10 @@ class _StatsGridState extends State<StatsGrid> {
                       color: Colors.blue,
                     ),
                   Expanded(
-                    child: Text(
+                    child: AutoSizeText(
                       count.toString(),
                       style: Theme.of(context).textTheme.titleLarge!,
+                      maxLines: 1,
                       textAlign:
                           isIconEnabled ? TextAlign.center : TextAlign.left,
                     ),

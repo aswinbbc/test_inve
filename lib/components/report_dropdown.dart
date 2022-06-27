@@ -29,7 +29,7 @@ class _ReportDropdownState extends State<ReportDropdown> {
   void findDropdownData(){
     RenderBox renderBox = actionKey.currentContext!.findRenderObject() as RenderBox;
     height=renderBox.size.height;
-    width=renderBox.size.width;
+    width=renderBox.size.width+20;
    Offset offset =  renderBox.localToGlobal(Offset.zero);
    xPosition = offset.dx;
    yPosition = offset.dy;
@@ -73,7 +73,7 @@ class _ReportDropdownState extends State<ReportDropdown> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.red.shade600,
+          color: Colors.blue.shade600,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
         child: Row(
@@ -121,7 +121,7 @@ class DropDown extends StatelessWidget {
               height: 20,
               width: 30,
               decoration: BoxDecoration(
-                color: Colors.red.shade600
+                color: Colors.blue.shade600
               ),
             ),
           ),
@@ -208,7 +208,7 @@ class DropDownItem extends StatelessWidget {
       //width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: isFirstItem ? const Radius.circular(8):Radius.zero,bottom: isLastItem ? const Radius.circular(8):Radius.zero),
-        color: isSelected ? Colors.red.shade900 : Colors.red.shade600,
+        color: isSelected ? Colors.blue.shade800 : Colors.blue.shade600,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
       child: Row(

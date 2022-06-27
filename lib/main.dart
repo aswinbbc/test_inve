@@ -1,10 +1,27 @@
 import 'package:amber_erp/Pages/sign_up.dart';
 import 'package:amber_erp/Pages/splash_screen.dart';
+import 'package:amber_erp/models/notification_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Material(
+      child: Container(
+        color: Colors.purple,
+        alignment: Alignment.center,
+        child: const Text(
+          'Something went wrong!',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
+      ),
+    );
+  };
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => NotificationProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +30,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white, primaryColor: Colors.blue),
@@ -37,7 +55,28 @@ class MyApp extends StatelessWidget {
       //home: CashSummary(),
       // home: ProfitReport(),
       //home: QuotationReport(),
-      home: const SplashScreen(),
+      home: FutureBuilder(future: InternetConnectionChecker().hasConnection,
+        builder: (context,AsyncSnapshot<bool> snapshot) {
+
+        if(snapshot.hasData){
+          if(snapshot.data!){
+            return const SplashScreen();
+          }else{
+            return Scaffold(
+              body: Container(
+                color: Colors.purple,
+                alignment: Alignment.center,
+                child: const Text(
+                  'No Internet!',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
+            );
+          }
+        }else{
+          return LinearProgressIndicator();
+        }
+      } ,),
       // home: TutorialVideo(),
       //home: VideoHome(),
       //home: WatsNewPage(),
@@ -58,4 +97,5 @@ class MyApp extends StatelessWidget {
       // home: ListviewControll(),
     );
   }
+
 }

@@ -164,8 +164,8 @@ class _ItemCardState extends State<ItemCard> {
                             Text("News Date : 20-03-2022",style: TextStyle(fontSize: 13),),
                           ],
                         ),
-                      RaisedButton(onPressed:(){},
-                        color: Colors.blueAccent,
+                      ElevatedButton(onPressed:(){},
+
                         child: const Text("Details",style: TextStyle(fontSize: 13,color: Colors.white),),
                       )
                      ],

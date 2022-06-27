@@ -108,7 +108,7 @@ class _StockReportState extends State<StockReport> {
               );
             } else if (snapshot.hasError) {
               return const Center(
-                child: Text("no data found"),
+                child: Text("You don't have permission to access"),
               );
             } else {
               return const Center(child: CircularProgressIndicator());

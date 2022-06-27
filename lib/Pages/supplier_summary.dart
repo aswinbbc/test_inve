@@ -38,35 +38,30 @@ class _SupplierSummaryState extends State<SupplierSummary> {
               AsyncSnapshot<List>snapshot){
             if(snapshot.hasData)
             {
-              return Column(
-                children: [
-                  //Text("Today",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 18),),
-                  ListView.builder(itemBuilder: (BuildContext,index){
-                    var element = Report.elementAt(index);
-                    //print(element['salesdate']);
-                    return Card(
-                      child: ListTile(tileColor: Colors.brown,
-                        leading: ClipRRect(borderRadius:BorderRadius.circular(30),child: const Image(image: AssetImage("assets/suppliericon.png"))),
-                        title: Text(element['supplierName'],style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.white),),
-                        subtitle: Wrap(children: <Widget>[
-                          const Text("Mobile:",style: TextStyle(color: Colors.white60),),
-                          Text(element['MobileNo'],style: const TextStyle(color: Colors.white60),)
-                        ],
-                        ),
-                        trailing: Text(element['Amount'],style: const TextStyle(color: Colors.yellow,fontSize: 18,fontWeight: FontWeight.bold),),
+              return ListView.builder(itemBuilder: (BuildContext,index){
+                var element = Report.elementAt(index);
+                //print(element['salesdate']);
+                return Card(
+                  child: ListTile(tileColor: Colors.brown,
+                    leading: ClipRRect(borderRadius:BorderRadius.circular(30),child: const Image(image: AssetImage("assets/suppliericon.png"))),
+                    title: Text(element['supplierName'],style: const TextStyle(fontWeight: FontWeight.w600,color: Colors.white),),
+                    subtitle: Wrap(children: <Widget>[
+                      const Text("Mobile:",style: TextStyle(color: Colors.white60),),
+                      Text(element['MobileNo'],style: const TextStyle(color: Colors.white60),)
+                    ],
+                    ),
+                    trailing: Text(element['Amount'],style: const TextStyle(color: Colors.yellow,fontSize: 18,fontWeight: FontWeight.bold),),
 
-
-                      ),
-                      elevation: 5,
-                    );
-                  },
-                    itemCount: Report.length,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(5),
-                    scrollDirection: Axis.vertical,
 
                   ),
-                ],
+                  elevation: 5,
+                );
+              },
+                itemCount: Report.length,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(5),
+                scrollDirection: Axis.vertical,
+
               );
             }
             else if (snapshot.hasError) {
