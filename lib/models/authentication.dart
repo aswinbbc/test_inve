@@ -2,6 +2,7 @@
 //import 'dart:js';
 //import 'dart:js';
 import 'package:amber_erp/Pages/client_list.dart';
+import 'package:flutter/material.dart';
 import 'network_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +27,7 @@ class UserAuth {
 
 class UserLogin {
   Future<String> login(
-      String? username, String? pass, String fingerprint) async {
+      String? username, String? pass, String fingerprint, context) async {
     // var data = await getData("http://10.0.2.2:8080/Amber/login.php",params:{'uname':username,'pass':pass});
     var data = await getData("${Url}login.php", params: {
       'uname': username,
@@ -46,10 +47,13 @@ class UserLogin {
         await prefs.setString('user_name', (data['username']).toString());
         await prefs.setString('pass_word', (data['password']).toString());
         //await prefs.setString('shop_name', (Report['clientName']).toString());
-        Get.to(() => ClientList(
-              businessList: Report,
-            ));
-        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClientList()));
+        // Get.to(() => ClientList(
+        //       businessList: Report,
+        //     ));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => ClientList(
+                  businessList: Report,
+                )));
       } else {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         List<dynamic> ReportData = [];

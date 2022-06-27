@@ -111,165 +111,178 @@ class _MySideBarState extends State<MySideBar>
                   child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 color: Colors.blue,
-                child: ListView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     const SizedBox(
                       height: 50,
                     ),
-                    ListTile(
-                      title: Text(
-                        user,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w800),
-                      ),
-                      subtitle: InkWell(
-                        onTap: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var txtuser = prefs.getString('user_name').toString();
-                          var txtPass = prefs.getString('pass_word').toString();
-                          var uid = await getUid();
-                          UserLogin().login(txtuser, txtPass, uid);
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductSearch()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Text(
-                            shop,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                      ),
-                      leading: const CircleAvatar(
-                        child: Icon(
-                          Icons.perm_identity,
-                          color: Colors.white,
-                        ),
-                        radius: 40,
-                      ),
-                    ),
-                    Divider(
-                      height: 64,
-                      thickness: 0.5,
-                      color: Colors.white.withOpacity(0.3),
-                      indent: 32,
-                      endIndent: 32,
-                    ),
-                    Padding(
-                      padding:
-                      EdgeInsets.only(top: 18.0, left: 18.0, right: 32.0),
-                      child: ReportDropdown(
-                        text: 'Report',
-                      ),
-                    ),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "Wat's New",
-                        onTap: () {
-                          onIconPressed();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const WatsNewPage()));
-                        }),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "Tutorial",
-                        onTap: () {
-                          onIconPressed();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const TutorialVideo()));
-                        }),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "Price Checking",
-                        onTap: () {
-                          onIconPressed();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ProductSearch()));
-                        }),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "Branch Controll",
-                        onTap: () {
-                          onIconPressed();
-                        }),
-                    MyMenuItem(
-                        icon: Icons.home,
-                        title: "News",
-                        onTap: () {
-                          onIconPressed();
-                          Get.to(()=>NotificationPage());
-                        }),MyMenuItem(
-                        icon: Icons.home,
-                        title: "Leave a feedback",
-                        onTap: () async {
-                          await launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLScH0fvmEPA__GXxUqFvPdW0_pY3YMPLJzY2jZGGxAf5Cu7DiA/viewform?usp=sf_link"));
-
-                          onIconPressed();
-                        }),
-                    // MyMenuItem(
-                    //     icon: Icons.home,
-                    //     title: "Reports",
-                    //     onTap: () {
-                    //       onIconPressed();
-                    //       Navigator.of(context).push(MaterialPageRoute(
-                    //           builder: (context) => const CommonReports()));
-                    //     }),
-
-                    Divider(
-                      height: 64,
-                      thickness: 0.5,
-                      color: Colors.white.withOpacity(0.3),
-                      indent: 32,
-                      endIndent: 32,
-                    ),
-                    // MyMenuItem(
-                    //   icon: Icons.exit_to_app,
-                    //   title: "Exit",
-                    //   onTap: onIconPressed,
-                    // ),
-                    Card(
-                      elevation: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          _showMyDialog();
-                        },
-                        child:ListTile(
-                        title:  Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Exit",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 26,
-                                      color: Colors.red),
-                                ),
-                                Icon(
-                                  Icons.home,
-                                  color: Colors.red,
-                                  size: 30,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 25.0,left: 25,right: 25),
-                        child: Column(
-                          children: [
-                            // Divider(color: Colors.white),
-                            _buildBody()
-                          ],
-                        ),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  user,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                subtitle: InkWell(
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var txtuser =
+                                        prefs.getString('user_name').toString();
+                                    var txtPass =
+                                        prefs.getString('pass_word').toString();
+                                    var uid = await getUid();
+                                    UserLogin()
+                                        .login(txtuser, txtPass, uid, context);
+                                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductSearch()));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Text(
+                                      shop,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                                leading: const CircleAvatar(
+                                  child: Icon(
+                                    Icons.perm_identity,
+                                    color: Colors.white,
+                                  ),
+                                  radius: 40,
+                                ),
+                              ),
+                              Divider(
+                                height: 24,
+                                thickness: 0.5,
+                                color: Colors.white.withOpacity(0.3),
+                                indent: 32,
+                                endIndent: 32,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 18.0, left: 18.0, right: 32.0),
+                                child: ReportDropdown(
+                                  text: 'Report',
+                                ),
+                              ),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "Wat's New",
+                                  onTap: () {
+                                    onIconPressed();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WatsNewPage()));
+                                  }),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "Tutorial",
+                                  onTap: () {
+                                    onIconPressed();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const TutorialVideo()));
+                                  }),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "Price Checking",
+                                  onTap: () {
+                                    onIconPressed();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProductSearch()));
+                                  }),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "Branch Controll",
+                                  onTap: () {
+                                    onIconPressed();
+                                  }),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "News",
+                                  onTap: () {
+                                    onIconPressed();
+                                    Get.to(() => NotificationPage());
+                                  }),
+                              MyMenuItem(
+                                  icon: Icons.home,
+                                  title: "Leave a feedback",
+                                  onTap: () async {
+                                    await launchUrl(Uri.parse(
+                                        "https://docs.google.com/forms/d/e/1FAIpQLScH0fvmEPA__GXxUqFvPdW0_pY3YMPLJzY2jZGGxAf5Cu7DiA/viewform?usp=sf_link"));
+
+                                    onIconPressed();
+                                  }),
+                              Divider(
+                                height: 64,
+                                thickness: 0.5,
+                                color: Colors.white.withOpacity(0.3),
+                                indent: 32,
+                                endIndent: 32,
+                              ),
+                              Card(
+                                elevation: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showMyDialog();
+                                  },
+                                  child: ListTile(
+                                    title: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Exit",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 26,
+                                                color: Colors.red),
+                                          ),
+                                          Icon(
+                                            Icons.home,
+                                            color: Colors.red,
+                                            size: 30,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 25.0, left: 25, right: 25),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // Divider(color: Colors.white),
+                                      _buildBody()
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -302,15 +315,18 @@ class _MySideBarState extends State<MySideBar>
       },
     );
   }
+
   Widget _buildBody() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(onTap: () async {
-            await launchUrl(Uri.parse("https://www.amalgamatetechnologies.com/"));
-          },
+          GestureDetector(
+            onTap: () async {
+              await launchUrl(
+                  Uri.parse("https://www.amalgamatetechnologies.com/"));
+            },
             child: AutoSizeText(
               'AMALGAMATE',
               maxLines: 1,
@@ -346,8 +362,7 @@ class _MySideBarState extends State<MySideBar>
     );
   }
 
-
-   _showMyDialog() async {
+  _showMyDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -364,7 +379,7 @@ class _MySideBarState extends State<MySideBar>
                 //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login_page()));
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (ctx) => const Login_page()),
-                        (route) => false);
+                    (route) => false);
               },
             ),
             TextButton(
@@ -404,5 +419,4 @@ class CustomMenuClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
   }
-
 }

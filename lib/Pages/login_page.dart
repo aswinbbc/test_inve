@@ -159,7 +159,8 @@ class _Login_pageState extends State<Login_page> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.white),
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.white),
                             onPressed: handleRememberme,
                             child: const Text(
                               "Sign In",
@@ -234,7 +235,9 @@ class _Login_pageState extends State<Login_page> {
     getPrefilled();
 
     String txtFingerPrint = await getUid();
-    UserLogin().login(txtuser, txtPass, txtFingerPrint).then((value) async {
+    UserLogin()
+        .login(txtuser, txtPass, txtFingerPrint, context)
+        .then((value) async {
       if (value == "User Successfully LoggedIn") {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const MySidebarLayout()));

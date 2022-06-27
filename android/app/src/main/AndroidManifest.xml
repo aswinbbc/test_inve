@@ -2,7 +2,7 @@
     package="com.example.amber_erp">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="amber_erp"
+        android:label="Amber"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
